@@ -1,0 +1,46 @@
+<%+header%>
+<script type="text/javascript">//<![CDATA[
+	XHR.poll(5, '<%=build_url("admin/iot/device/devicedata")%>', null,
+		function(x, remdata)
+		{
+			var e;
+			
+			var time = "";
+			var devid = "";
+			var humidity = "0";
+			var temperature = "0";
+			if (typeof data != 'undefined' || data !== null) 
+			{
+				var myDate = new Date( data.timestamp *1000);
+				time = myDate.toLocaleString(); 
+				devid = data.device_id;
+				humidity = data.humidity;
+				temperature = data.temperature;
+			}
+
+			if (e = document.getElementById('devid'))
+			 	e.innerHTML = devid;
+
+			if (e = document.getElementById('time'))
+			 	e.innerHTML = time; 
+
+			if (e = document.getElementById('humidity'))
+			 	e.innerHTML = humidity+" %";
+
+			if (e = document.getElementById('temperature'))
+			 	e.innerHTML = temperature+" &deg;C";
+		}
+	);
+//]]></script>
+
+<h2 name="content"><%:Status%></h2>
+<fieldset class="cbi-section">
+	<legend><%:Device Data%></legend>
+	<table width="100%" cellspacing="10">
+		<tr><td width="33%"><%:Device ID%></td><td id="devid">-</td></tr>
+		<tr><td width="33%"><%:Time%></td><td id="time">-</td></tr>
+		<tr><td width="33%"><%:Humidity%></td><td id="humidity">-</td></tr>
+		<tr><td width="33%"><%:Temperature%></td><td id="temperature">-</td></tr>
+	</table>
+</fieldset>
+<%+footer%>
